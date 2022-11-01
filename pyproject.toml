@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "apache-beam-sample"
+version = "0.1.0"
+description = ""
+authors = ["garunitule <youtaiguhe@gmail.com>"]
+readme = "README.md"
+packages = [{include = "apache_beam_sample"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+wheel = "^0.37.1"
+apache-beam = {extras = ["gcp"], version = "^2.42.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
