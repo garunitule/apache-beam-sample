@@ -2,20 +2,17 @@ import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import StandardOptions
 from my_options import MyOptions
+from pipeline import ComputeWordLength
 
-options = PipelineOptions()
+options = MyOptions()
 # ローカルで実行
 options.view_as(StandardOptions).runner = "DirectRunner"
-p = beam.Pipeline(options=MyOptions())
+p = beam.Pipeline(options=options)
 
-lines = (
-    p | "ReadFromInMemory" >> beam.Create([
-    'To be, or not to be: that is the question: ',
-    'Whether \'tis nobler in the mind to suffer ',
-    'The slings and arrows of outrageous fortune, ', 'Or to take arms against a sea of troubles, '
-    ])
+(
+    p | "ReadFromText" >> beam.io.ReadFromText(options.input)
+    | "Count" >> beam.ParDo(ComputeWordLength())
+    | "WriteCountToTxt" >> beam.io.WriteToText(options.output, shard_name_template="")
 )
-
-lines | "WriteToText" >> beam.io.WriteToText("./output", file_name_suffix=".txt")
 
 p.run()
