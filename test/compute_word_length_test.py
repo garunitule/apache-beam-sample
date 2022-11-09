@@ -4,10 +4,10 @@ import apache_beam as beam
 from apache_beam.testing.test_pipeline import TestPipeline
 from apache_beam.testing.util import assert_that, equal_to
 
-from pipeline import ComputeWordLength
+from pipelines.compute_word_length import ComputeWordLength
 
-class PipelineTest(TestCase):
-    def test_pipeline(self):
+class ComputeWordLengthTest(TestCase):
+    def test(self):
         """失敗した場合のみエラーが表示される
         """
         expected = [
@@ -34,5 +34,5 @@ class PipelineTest(TestCase):
             assert_that(actual, equal_to(expected))
 
 if __name__ == '__main__':
-    tester = PipelineTest()
-    tester.test_pipeline()
+    tester = ComputeWordLengthTest()
+    tester.test()
