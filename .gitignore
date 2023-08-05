@@ -135,3 +135,6 @@ output*.txt
 
 # vscode
 launch.json
+
+output
+.DS_Store

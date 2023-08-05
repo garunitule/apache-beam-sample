@@ -1,7 +1,7 @@
 import apache_beam as beam
 from apache_beam.options.pipeline_options import StandardOptions
-from options.my_options import MyOptions
-from pipelines.compute_word_length import ComputeWordLength
+from my_options import MyOptions
+from compute_word_length import ComputeWordLength
 
 options = MyOptions()
 # ローカルで実行

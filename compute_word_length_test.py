@@ -4,7 +4,7 @@ import apache_beam as beam
 from apache_beam.testing.test_pipeline import TestPipeline
 from apache_beam.testing.util import assert_that, equal_to
 
-from pipelines.compute_word_length import ComputeWordLength
+from compute_word_length import ComputeWordLength
 
 class ComputeWordLengthTest(TestCase):
     def test(self):
