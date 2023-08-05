@@ -2,8 +2,8 @@ import apache_beam as beam
 
 def window(test=None):
   # ここを変えると結果が変わる
-  WINDOW_DURATION = 3 * 30 * 24 * 60 * 60
-  WINDOW_OFFSET = 1583020800 # March, 2020
+  DURATION = 3 * 30 * 24 * 60 * 60
+  PERIOD = 1 * 30 * 24 * 60 * 60
 
   with beam.Pipeline() as pipeline:
     produce = (pipeline
@@ -17,8 +17,8 @@ def window(test=None):
                     {'name': 'Potato', 'season': 1598918400},  # September, 2020
                   ])
                  | 'With timestamps' >> beam.Map(lambda plant: beam.window.TimestampedValue(plant['name'], plant['season']))
-                 | 'Window into fixed 2-month windows' >> beam.WindowInto(
-                              beam.transforms.window.FixedWindows(WINDOW_DURATION, WINDOW_OFFSET))
+                 | 'Sliding window' >> beam.WindowInto(
+                              beam.transforms.window.SlidingWindows(DURATION, PERIOD)) # offsetがあることに注意（ただし、[9, PERIOD)の範囲）
                  | 'Count per window' >> beam.combiners.Count.PerElement()
                  | 'Print results' >> beam.Map(print)
                  )
